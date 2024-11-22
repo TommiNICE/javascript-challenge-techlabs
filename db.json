@@ -1,0 +1,10 @@
+{
+    "pro": {
+        "argument1": "Pro argument 1 description",
+        "argument2": "Pro argument 2 description"
+    },
+    "con": {
+        "argument1": "Con argument 1 description",
+        "argument2": "Con argument 2 description"
+    }
+}
