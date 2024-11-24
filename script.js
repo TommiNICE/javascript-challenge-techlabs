@@ -46,37 +46,38 @@ async function renderList(list, route) {
     const data = await getFromDatabase(route)
     list.innerHTML = ''
     data.forEach(item => {
-    const html = `
+        const html = `
         <li>
-        <span>${item.content}</span>
-        <button onclick="updateItem('${route}', '${item.id}', '${item.content}', this.closest('ul'))">Update</button>
-        <button onclick="deleteItem('${route}', '${item.id}', this.closest('ul'))">Delete</button>
+            <span>${item.content}</span>
+            <div class="update-delete-buttons">
+                <button onclick="updateItem('${route}', '${item.id}', '${item.content}', this.closest('ul'))">Update</button>
+                <button onclick="deleteItem('${route}', '${item.id}', this.closest('ul'))">Delete</button>
+            </div>
         </li>
     `
-    list.insertAdjacentHTML('beforeend', html)
+        list.insertAdjacentHTML('beforeend', html)
     })
 }
 
 async function updateItem(route, id, content, list) {
     const newContent = prompt('Enter new content:', content)
     if (newContent) {
-    await fetch(`${route}/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: newContent })
-    })
-    await renderList(list, route)
+        await fetch(`${route}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: newContent })
+        })
+        await renderList(list, route)
     }
 }
 
 async function deleteItem(route, id, list) {
     await fetch(`${route}/${id}`, {
-    method: 'DELETE'
+        method: 'DELETE'
     })
     await renderList(list, route)
 }
 
-// Initial render of both lists
 window.addEventListener('DOMContentLoaded', () => {
     renderList(document.getElementById('pros-list'), 'http://localhost:3000/pro')
     renderList(document.getElementById('cons-list'), 'http://localhost:3000/con')
