@@ -1,10 +1,42 @@
 {
-    "pro": {
-        "argument1": "Pro argument 1 description",
-        "argument2": "Pro argument 2 description"
+  "pro": [
+    {
+      "id": "_dglopbzd4",
+      "content": "asdf"
     },
-    "con": {
-        "argument1": "Con argument 1 description",
-        "argument2": "Con argument 2 description"
+    {
+      "id": "_vwel35ibu",
+      "content": "asdfasfd"
+    },
+    {
+      "id": "_orpg421i0",
+      "content": "asdfsdfa"
+    },
+    {
+      "id": "_gc1d4sk6g",
+      "content": "lknlkn"
+    },
+    {
+      "id": "_spho53mxt",
+      "content": "rtzrt"
     }
+  ],
+  "con": [
+    {
+      "id": "_g2yv8kzgy",
+      "content": "asdf"
+    },
+    {
+      "id": "_sw2ihyf4r",
+      "content": "asdfasdf"
+    },
+    {
+      "id": "_1je5rt9ff",
+      "content": "asdfasddf"
+    },
+    {
+      "id": "_5oa21jkzh",
+      "content": "ertzrt"
+    }
+  ]
 }

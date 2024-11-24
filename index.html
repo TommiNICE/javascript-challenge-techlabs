@@ -14,12 +14,12 @@
             <h2>Pro's</h2>
             <form id="pros-form">
                 <label for="pros-input">Add a pro:</label>
-                <input type="text" id="pros-input" placeholder="Add a pro">
+                <input type="text" id="pros-input" placeholder="Add a pro argument">
                 <button type="button" id="add-pros-button">Add</button>
             </form>
+            
             <div>
                 <ul id="pros-list">
-                    <!-- List items will be added here -->
                 </ul>
             </div>
         </section>
@@ -27,16 +27,76 @@
             <h2>Con's</h2>
             <form id="cons-form">
                 <label for="cons-input">Add a con:</label>
-                <input type="text" id="cons-input" placeholder="Add a con">
+                <input type="text" id="cons-input" placeholder="Add a con argument">
                 <button type="button" id="add-cons-button">Add</button>
             </form>
             <div>
                 <ul id="cons-list">
-                    <!-- List items will be added here -->
                 </ul>
             </div>
     </main>
     <footer></footer>
+    <script>
+        document.getElementById('add-pros-button').addEventListener('click', async () => {
+            const input = document.getElementById('pros-input').value;
+            if (input) {
+                await saveToDatabase(input, 'http://localhost:3000/pro');
+                document.getElementById('pros-input').value = '';
+            }
+            renderList(document.getElementById('pros-list'), 'http://localhost:3000/pro');
+        });
+        document.getElementById('add-cons-button').addEventListener('click', async () => {
+            const input = document.getElementById('cons-input').value;
+            if (input) {
+                await saveToDatabase(input, 'http://localhost:3000/con');
+                document.getElementById('cons-input').value = '';
+            }
+            renderList(document.getElementById('cons-list'), 'http://localhost:3000/con');
+        });
+
+        async function saveToDatabase(content, route) {
+            const id = generateUniqueId();
+            const response = await fetch(route, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id, content })
+            });
+            if (!response.ok) {
+                console.error('Failed to save to database');
+            }
+        }
+
+        function generateUniqueId() {
+            return '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        async function getFromDatabase(route) {
+            const response = await fetch(route);
+            if (!response.ok) {
+                console.error('Failed to get data from database');
+                return [];
+            }
+            return response.json();
+        }
+
+        async function renderList(list, route) {
+            const data = await getFromDatabase(route);
+            list.innerHTML = '';
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.content;
+                list.appendChild(li);
+            });
+        }
+
+        // Initial render of both lists
+        window.addEventListener('DOMContentLoaded', () => {
+            renderList(document.getElementById('pros-list'), 'http://localhost:3000/pro');
+            renderList(document.getElementById('cons-list'), 'http://localhost:3000/con');
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
