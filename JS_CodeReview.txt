@@ -1,0 +1,74 @@
++-------------------------+-------------------------+------------+
+|        Task Type        |          Task          |   Done?     | 
++-------------------------+-------------------------+------------+
+| Required               | Display a List of      | [ ✅]       |              
+|                         | Objects               |              |              
++-------------------------+-------------------------+------------+
+| Required               | Add a New Object       | [✅]        |             
++-------------------------+-------------------------+------------+
+| Required               | Delete an Object       | [✅]        |              
++-------------------------+-------------------------+------------+
+| Optional               | Update Object          | [✅]        |              
+|                         | Contents              |              |       
++-------------------------+-------------------------+------------+
+| Optional               | Loading Indicator      | [❌]        |              
++-------------------------+-------------------------+------------+
+| Optional               | Collaboration          | [✅]        |              
++-------------------------+-------------------------+------------+
+
+
+Notes :
+--------------------------------------------------------------------------------------------------------------------------------------------- 
+- It's better to have a main development branch in your Git repository instead of relying only on the main branch. This practice ensures that the code in the main branch is tested and working correctly. Also, having a separate branch lets you make changes without worrying about breaking the code.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+- For the if statement in adding pros and cons you could put an else condition and show a descriptive message in case that input is empty .
+
+Completed code 👇🏻
+```
+    if (input) {
+        await saveToDatabase(input, 'http://localhost:3000/pro')
+        document.getElementById('pros-input').value = ''
+    }else{
+
+       if (input) {
+      await saveToDatabase(input, "http://localhost:3000/pro");
+      document.getElementById("pros-input").value = "";
+    } else {
+      alert("Please enter a valid input");
+    }}
+```
+---------------------------------------------------------------------------------------------------------------------------------------------
+- console.log() doesn't say much to the end user in case of Error , insetad you could have a div or p which is initially hidden and in case of an Error you could change the display via manipulating DOM for couple of seconds.
+  more about adding and removing classes via JS : https://ryfarlane.com/article/add-remove-class-vanilla-javascript#:~:text=Toggle%20class%20in%20vanilla%20JavaScript,classList.
+---------------------------------------------------------------------------------------------------------------------------------------------
+- For a sensitive operation such as sending a request to a server, its a good practice to use try-catch or maybe try-catch-finally block , like this you have more control over the behavior of the response and prevent the possible crash.
+Exmaple 👇🏻:
+```
+try {
+  const response = await fetch(route, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, content }),
+  });
+  if (!response.ok) throw new Error("Failed to save to database");
+} catch (error) {
+  alert("An error occurred: " + error.message);
+}
+
+```
+---------------------------------------------------------------------------------------------------------------------------------------------
+- In the render list, you could have used the method i have mentioned about adding classes for displaying and hiding elements or just in the render list having a list that shows a loading message before the preview of actual data. 
+Exmaple 👇🏻:
+```
+async function renderList(list, route) {
+  list.innerHTML = "<li>Loading...</li>";
+  const data = await getFromDatabase(route);
+  list.innerHTML = ""; 
+  data.forEach((item) => {
+   
+  });
+}
+
+```
+
